@@ -31,22 +31,40 @@ const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(lightHelper, gridHelper);
 
-const controls = new OrbitControls (camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 
-function addStar(){
+function addStar() {
 	const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-	const material = new THREE.MeshStandardMaterial( {color: 0xffffff} );
+	const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
 	const star = new THREE.Mesh(geometry, material);
 
-	const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
-	star.position.set(x,y,z);
+	const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+	star.position.set(x, y, z);
 	scene.add(star);
 }
 
 Array(200).fill().forEach(addStar);
 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('assets/space.jpg');
 scene.background = spaceTexture;
+
+const adVaporamTexture = new THREE.TextureLoader().load('assets/AD_VAPORAM.png');
+const adVaporam = new THREE.Mesh(
+	new THREE.BoxGeometry(3, 3, 3),
+	new THREE.MeshBasicMaterial({ map: adVaporamTexture }),
+);
+scene.add(adVaporam);
+
+const moonTexture = new THREE.TextureLoader().load('assets/moon.jpg');
+const normalTexture = new THREE.TextureLoader().load('assets/normal.jpg');
+const moon = new THREE.Mesh(
+	new THREE.SphereGeometry(3, 32, 32),
+	new THREE.MeshStandardMaterial({
+		map: moonTexture,
+		normalMap: normalTexture,
+	})
+);
+scene.add(moon);
 
 function animate() {
 	requestAnimationFrame(animate);
