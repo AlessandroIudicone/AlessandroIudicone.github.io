@@ -8,7 +8,7 @@
 Install dependencies
 
 ```bash
-npm install
+npm ci
 ```
 
 Run the application in development environment
@@ -47,4 +47,26 @@ Remove the old image of the application if present;
 
 ```bash
 docker image rm <imageID>
+```
+
+## To deploy on `AlessandroIudicone.github.io` repository
+
+You need to have the `AlessandroIudicone.github.io` folder prelably cloned in the same path of the `3d-aless` folder
+
+Install the dependencies
+
+```bash
+npm ci
+```
+
+Build the output files
+
+```bash
+RUN npm run build
+```
+
+Copy the entire content of the `dist` folder to the `AlessandroIudicone.github.io` project folder
+
+```bash
+cp -a dist/. ../AlessandroIudicone.github.io/
 ```

@@ -1,4 +1,8 @@
 import './style.css';
+import AD_VAPORAM from './assets/AD_VAPORAM.png';
+import MOON_TEXTURE from './assets/moon.jpg';
+import NORMAL_BACKGROUND from './assets/normal.jpg';
+import SPACE_BACKGROUND from './assets/space.jpg';
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -60,12 +64,12 @@ Array(200).fill().forEach(addStar);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load('assets/space.jpg');
+const spaceTexture = new THREE.TextureLoader().load(SPACE_BACKGROUND);
 scene.background = spaceTexture;
 
 // Avatar
 
-const adVaporamTexture = new THREE.TextureLoader().load('assets/AD_VAPORAM.png');
+const adVaporamTexture = new THREE.TextureLoader().load(AD_VAPORAM);
 const adVaporam = new THREE.Mesh(
 	new THREE.BoxGeometry(3, 3, 3),
 	new THREE.MeshBasicMaterial({ map: adVaporamTexture }),
@@ -75,8 +79,8 @@ scene.add(adVaporam);
 
 // Moon
 
-const moonTexture = new THREE.TextureLoader().load('assets/moon.jpg');
-const normalTexture = new THREE.TextureLoader().load('assets/normal.jpg');
+const moonTexture = new THREE.TextureLoader().load(MOON_TEXTURE);
+const normalTexture = new THREE.TextureLoader().load(NORMAL_BACKGROUND);
 const moon = new THREE.Mesh(
 	new THREE.SphereGeometry(3, 32, 32),
 	new THREE.MeshStandardMaterial({

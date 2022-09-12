@@ -2,7 +2,7 @@
 ### build ###
 #############
 
-FROM node:16.13.2 as build
+FROM node:16.17.0 as build
 
 LABEL mantainer="alessandroiudicone@gmail.com"
 
@@ -43,9 +43,6 @@ RUN rm -rf /usr/share/nginx/html/*
 
 # Copying the built artifacts from the build environment
 COPY --from=build /app/dist /usr/share/nginx/html
-
-# TODO: Is it normal to declare the assets to bundle with the application? Maybe I should declare them in a configuration file.
-COPY src/assets /usr/share/nginx/html/assets
 
 # Declaring exposed ports
 EXPOSE 80
