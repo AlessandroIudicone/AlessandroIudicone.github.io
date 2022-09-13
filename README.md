@@ -53,6 +53,13 @@ docker image rm <imageID>
 
 You need to have the `AlessandroIudicone.github.io` folder prelably cloned in the same path of the `3d-aless` folder
 
+Remove the previously installed dependencies and built files
+
+```bash
+rm -rf node_modules/
+rm -rf dist/
+```
+
 Install the dependencies
 
 ```bash
