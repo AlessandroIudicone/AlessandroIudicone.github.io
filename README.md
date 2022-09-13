@@ -62,7 +62,7 @@ npm ci
 Build the output files
 
 ```bash
-RUN npm run build
+npm run build
 ```
 
 Copy the entire content of the `dist` folder to the `AlessandroIudicone.github.io` project folder
