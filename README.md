@@ -43,10 +43,16 @@ docker container run --name 3d-aless_container -p 8080:80 -d local-repo/3d-aless
 
 and go to `http://localhost:8080/` on a browser to see the rendered output.
 
-Remove the old image of the application if present;
+Once finished, stop container
 
 ```bash
-docker image rm <imageID>
+docker stop 3d-aless_container
+```
+
+and remove the image of the application
+
+```bash
+docker image rm -f local-repo/3d-aless
 ```
 
 ## To deploy on `AlessandroIudicone.github.io` repository
@@ -77,3 +83,11 @@ Copy the entire content of the `dist` folder to the `AlessandroIudicone.github.i
 ```bash
 cp -a dist/. ../AlessandroIudicone.github.io/
 ```
+
+then go inside the folder of the GitHub page project
+
+```bash
+cd ../AlessandroIudicone.github.io/
+```
+
+and commit and push the changes; the deployment of the new content will happen automatically from GitHub.
