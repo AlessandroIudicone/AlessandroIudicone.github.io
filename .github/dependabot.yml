@@ -1,0 +1,22 @@
+# Dependabot opens pull requests with dependency updates; the CI/CD workflow
+# tests each of them, and merging into main deploys the updated site.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      # Minor and patch updates together in a single PR;
+      # major updates arrive one per PR, since they may need code changes
+      npm-minor-and-patch:
+        patterns: ['*']
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      github-actions:
+        patterns: ['*']
