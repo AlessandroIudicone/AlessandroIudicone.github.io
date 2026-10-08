@@ -1,0 +1,12 @@
+# Always LF line endings, in the repository and in every working copy
+# (Windows and WSL included), so ESLint's `linebreak-style: unix` rule
+# behaves the same on every machine and in CI.
+* text=auto eol=lf
+
+# Binary assets: never touch them
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
