@@ -1,21 +1,68 @@
-# Scrollable 3D Animation with Three.js
+# Alessandro Iudicone's website
+
+Personal website with a scrollable 3D animation made with [Three.js](https://threejs.org/) and [Vite](https://vite.dev/), published with GitHub Pages at <https://alessandroiudicone.com>.
+
+Based on Fireship's tutorial:
 
 - Watch the [full tutorial](https://youtu.be/Q7AOvWpIVHU) on YouTube
 - [Scrollable Three.js Animation](https://fireship.io/snippets/threejs-scrollbar-animation) Snippet
 
+## Project structure
+
+```text
+src/                   site source (Vite root)
+├── index.html
+├── main.js            browser wiring: renderer, textures, scroll, animation loop
+├── scene.js           3D scene and animations (no DOM/WebGL: unit-testable)
+├── scene.test.js      unit tests (Vitest)
+├── style.css
+├── assets/            images and textures
+└── public/CNAME       copied as-is into the build output
+tests/e2e/             end-to-end smoke tests (Playwright) on the production build
+.github/workflows/     CI/CD pipeline
+.github/dependabot.yml automatic dependency updates
+```
+
 ## Usage
 
-Install dependencies
+Requires Node.js 24 (the version is in `.nvmrc`: with nvm just run `nvm use`).
 
 ```bash
-npm ci
+npm ci              # install dependencies
+npm run dev         # development server with hot reload
+npm run lint        # ESLint
+npm test            # unit tests (npm run test:watch to re-run them on every change)
+npm run build       # production build in dist/
+npm run preview     # serve dist/ on http://localhost:4173
 ```
 
-Run the application in development environment
+The end-to-end tests open the production build in a headless Chromium:
 
 ```bash
-npm run dev
+npx playwright install --with-deps chromium   # first time only
+npm run build
+npm run test:e2e
 ```
+
+## CI/CD and deployment
+
+The pipeline is [.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml):
+
+| Event                         | What happens                                                         |
+| ----------------------------- | -------------------------------------------------------------------- |
+| Pull request                  | `npm ci` → lint → unit tests → build → end-to-end tests              |
+| Push to `main` or manual run  | the same checks, then `dist/` is deployed to GitHub Pages            |
+
+**To publish a change, push it to `main`** (or merge a pull request). No build output is committed: the workflow uploads `dist/` as a Pages artifact and `actions/deploy-pages` publishes it. If any check fails, nothing is deployed and the site stays as it is.
+
+One-time repository settings:
+
+- **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+- The custom domain `alessandroiudicone.com` is configured in **Settings → Pages → Custom domain**: when deploying with Actions, GitHub ignores the `CNAME` file (it is kept in `src/public/` for reference).
+
+### Dependency updates
+
+[Dependabot](.github/dependabot.yml) checks npm packages and GitHub Actions once a month and opens pull requests (minor and patch npm updates grouped in a single one). The pipeline tests every pull request: merge it when it's green and the site is redeployed with the new versions.
 
 ## :whale: **Run with Docker in local environment**
 
@@ -54,40 +101,3 @@ and remove the image of the application
 ```bash
 docker image rm -f local-repo/3d-aless
 ```
-
-## To deploy on `AlessandroIudicone.github.io` repository
-
-You need to have the `AlessandroIudicone.github.io` folder prelably cloned in the same path of the `3d-aless` folder
-
-Remove the previously installed dependencies and built files
-
-```bash
-rm -rf node_modules/
-rm -rf dist/
-```
-
-Install the dependencies
-
-```bash
-npm ci
-```
-
-Build the output files
-
-```bash
-npm run build
-```
-
-Copy the entire content of the `dist` folder to the `AlessandroIudicone.github.io` project folder
-
-```bash
-cp -a dist/. ../AlessandroIudicone.github.io/
-```
-
-then go inside the folder of the GitHub page project
-
-```bash
-cd ../AlessandroIudicone.github.io/
-```
-
-and commit and push the changes; the deployment of the new content will happen automatically from GitHub.

@@ -2,7 +2,8 @@
 ### build ###
 #############
 
-FROM node:22.17.1 as build
+# Same Node.js major version as .nvmrc (used locally and in CI)
+FROM node:24 AS build
 
 LABEL mantainer="alessandroiudicone@gmail.com"
 
